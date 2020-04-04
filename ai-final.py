@@ -1,7 +1,6 @@
 ### importing python libraries #####################
 import random
 import pandas as pd
-import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -23,7 +22,7 @@ top=Tk()
 
 
 ###read csv for title column
-df=pd.read_csv("movie_dataset.csv")
+df=pd.read_csv("movie_dataset.csv")  # csv file having movie dataset
 title_col=df["title"]
 
 
@@ -56,6 +55,7 @@ def movieCallBack(film):
     ### Creating count matrix from this new combined column
     cv=CountVectorizer()
     count_matrix=cv.fit_transform(df["combined_features"])
+    
 
 
     ### Compute the Cosine Similarity based on the count_matrix
@@ -66,10 +66,12 @@ def movieCallBack(film):
     ### Get index of this movie from its title
     movie_index=get_index_from_title(movie_user_likes)
     similar_movies=list(enumerate(cosine_sim[movie_index]))
+    
 
 
     ### Get a list of similar movies in descending order of similarity score
     sorted_similar_movies=sorted(similar_movies,key=lambda x:x[1],reverse=True)
+    
 
 
     ### Storing most similar first five movies in a list
@@ -85,27 +87,33 @@ def movieCallBack(film):
     ### code to make GUI for recommendation window
     tp=Tk()
     tp.title("recommendations")
-    tp.geometry("815x350")
+    tp.geometry("815x380")
 
 
-    l1=Label(tp, text = " ",pady=10) 
-    l1.grid(row = 0, column = 0, sticky = W) 
+    
+    l1=Label(tp, text = "You previously selected",pady=10) 
+    l1.grid(row = 1, column = 0, sticky = W)
+    
+    
+    
+    box4=Button(tp,text=film,width=15,height=1,border=7,bg='lime',relief='flat')
+    box4.grid(row = 2, column = 0, sticky = W, padx = 4)
 
-    box4=Button(tp,text=" Recommended Movies",width=20,height=1,border=7,bg='mediumturquoise',relief='flat')
-    box4.grid(row = 1, column = 2, sticky = W, padx = 4)
+    box5=Button(tp,text=" Recommended Movies",width=20,height=1,border=7,bg='mediumturquoise',relief='flat')
+    box5.grid(row = 3, column = 2, sticky = W, padx = 4)
 
-    b1=Button(tp,text=film_list2[1],width=20,height=15,border=3,bg='turquoise',relief='flat')  
-    b2=Button(tp,text=film_list2[2],width=20,height=15,border=5,bg='mediumturquoise',relief='flat')
-    b3=Button(tp,text=film_list2[3],width=20,height=15,border=7,bg='lightseagreen',relief='flat')
-    b4=Button(tp,text=film_list2[4],width=20,height=15,border=5,bg='mediumturquoise',relief='flat')
-    b5=Button(tp,text=film_list2[5],width=20,height=15,border=3,bg='turquoise',relief='flat')
+    b1=Button(tp,text=film_list2[1],width=20,height=15,border=3,bg='turquoise',relief='flat',command=lambda:movieCallBack(film_list2[1]))  
+    b2=Button(tp,text=film_list2[2],width=20,height=15,border=5,bg='mediumturquoise',relief='flat',command=lambda:movieCallBack(film_list2[2]))
+    b3=Button(tp,text=film_list2[3],width=20,height=15,border=7,bg='lightseagreen',relief='flat',command=lambda:movieCallBack(film_list2[3]))
+    b4=Button(tp,text=film_list2[4],width=20,height=15,border=5,bg='mediumturquoise',relief='flat',command=lambda:movieCallBack(film_list2[4]))
+    b5=Button(tp,text=film_list2[5],width=20,height=15,border=3,bg='turquoise',relief='flat',command=lambda:movieCallBack(film_list2[5]))
 
 
-    b1.grid(row = 2, column = 0, sticky = W, padx = 4,pady=10) 
-    b2.grid(row = 2, column = 1, sticky = W, padx = 4) 
-    b3.grid(row = 2, column = 2, sticky = W, padx = 4) 
-    b4.grid(row = 2, column = 3, sticky = W, padx = 4) 
-    b5.grid(row = 2, column = 4, sticky = W, padx = 4)
+    b1.grid(row = 4, column = 0, sticky = W, padx = 4,pady=10) 
+    b2.grid(row = 4, column = 1, sticky = W, padx = 4) 
+    b3.grid(row = 4, column = 2, sticky = W, padx = 4) 
+    b4.grid(row = 4, column = 3, sticky = W, padx = 4) 
+    b5.grid(row = 4, column = 4, sticky = W, padx = 4)
 
     tp.mainloop()
     
